@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil de {{ usuario.username }}</title>
+</head>
+<body>
+<section class="masthead bg-primary text-white text-center">
+    <h1>Perfil de {{ usuario.username }}</h1>
+
+    <!-- Formulário para adicionar novo projeto -->
+    <div class="form-background">
+    <form method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            <label class="form-label">{{ form.titulo.label }}</label>
+            {{ form.titulo() }}
+        </div>
+        <div class="form-group">
+            <label class="form-label">{{ form.descricao.label }}</label>
+            {{ form.descricao() }}
+        </div>
+        <div class="form-group">
+            <label class="form-label">{{ form.link.label }}</label>
+            {{ form.link() }}
+        </div>
+        <div class="form-group">
+            <label class="form-label">{{ form.foto.label }}</label>
+            {{ form.foto() }}
+        </div>
+        <div class="form-group">
+            <button type="submit">Adicionar Projeto</button>
+        </div>
+    </form>
+</div>
+
+
+</section>
+
+<section class="page-section portfolio" id="portfolio">
+    <!-- Exibir projetos em cards -->
+    <div class="row">
+    {% for projeto in usuario.projetos %}
+    <div class="col-md-6 col-lg-4 mb-5">
+        <div class="card projeto-card" style="height: 100%;">
+            <img src="{{ url_for('static', filename='fotos_projeto/' + projeto.imagem) }}" class="card-img-top" alt="{{ projeto.titulo }}">
+            <div class="card-body" style="height: 100%;">
+                <h5 class="card-title text-truncate" style="max-width: 100%;">{{ projeto.titulo }}</h5>
+                <p class="card-text" style="max-height: 80px; overflow: hidden; text-overflow: ellipsis;">{{ projeto.descricao }}</p>
+                <a href="{{ projeto.link }}" class="btn btn-primary card-button" target="_blank">Acessar projeto</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+</section>
+
+</body>
+</html>
